@@ -9,6 +9,7 @@ import ee.carlrobert.codegpt.credentials.AzureCredentialsManager;
 import ee.carlrobert.codegpt.credentials.OpenAICredentialsManager;
 import ee.carlrobert.codegpt.settings.state.AzureSettingsState;
 import ee.carlrobert.codegpt.settings.state.LlamaSettingsState;
+import ee.carlrobert.codegpt.settings.state.OllamaSettingsState;
 import ee.carlrobert.codegpt.settings.state.OpenAISettingsState;
 import ee.carlrobert.codegpt.settings.state.SettingsState;
 import ee.carlrobert.codegpt.settings.state.YouSettingsState;
@@ -80,11 +81,13 @@ public class SettingsConfigurable implements Configurable {
     settings.setDisplayName(settingsComponent.getDisplayName());
     settings.setSelectedService(settingsComponent.getSelectedService());
 
-    var azureSettings = AzureSettingsState.getInstance();
     var openAISettings = OpenAISettingsState.getInstance();
     openAISettings.apply(serviceSelectionForm);
-    azureSettings.apply(serviceSelectionForm);
+
+    AzureSettingsState.getInstance().apply(serviceSelectionForm);
     LlamaSettingsState.getInstance().apply(serviceSelectionForm);
+    OllamaSettingsState.getInstance().apply(serviceSelectionForm);
+
     YouSettingsState.getInstance()
         .setDisplayWebSearchResults(serviceSelectionForm.isDisplayWebSearchResults());
 

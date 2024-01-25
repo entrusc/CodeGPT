@@ -59,6 +59,8 @@ public class ServiceSelectionForm {
 
   private final LlamaServiceSelectionForm llamaServiceSectionPanel;
 
+  private final OllamaServiceSelectionForm ollamaServiceSelectionForm;
+
   public ServiceSelectionForm(Disposable parentDisposable) {
     this.parentDisposable = parentDisposable;
     openAIApiKeyField = new JBPasswordField();
@@ -113,6 +115,7 @@ public class ServiceSelectionForm {
     azureServiceSectionPanel = createAzureServiceSectionPanel();
     youServiceSectionPanel = createYouServiceSectionPanel();
     llamaServiceSectionPanel = new LlamaServiceSelectionForm();
+    ollamaServiceSelectionForm = new OllamaServiceSelectionForm();
 
     registerPanelsVisibility(azureSettings);
     registerRadioButtons();
@@ -407,6 +410,10 @@ public class ServiceSelectionForm {
 
   public JPanel getLlamaServiceSectionPanel() {
     return llamaServiceSectionPanel;
+  }
+
+  public OllamaServiceSelectionForm getOllamaServiceSelectionForm() {
+    return ollamaServiceSelectionForm;
   }
 
   public int getContextSize() {
