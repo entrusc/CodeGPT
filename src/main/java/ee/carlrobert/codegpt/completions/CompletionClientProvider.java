@@ -3,6 +3,7 @@ package ee.carlrobert.codegpt.completions;
 import static java.lang.String.format;
 
 import ee.carlrobert.codegpt.CodeGPTPlugin;
+import ee.carlrobert.codegpt.completions.ollama.OllamaClient;
 import ee.carlrobert.codegpt.completions.you.YouUserManager;
 import ee.carlrobert.codegpt.credentials.AzureCredentialsManager;
 import ee.carlrobert.codegpt.credentials.OpenAICredentialsManager;
@@ -75,6 +76,10 @@ public class CompletionClientProvider {
     return new LlamaClient.Builder()
         .setPort(LlamaSettingsState.getInstance().getServerPort())
         .build(getDefaultClientBuilder());
+  }
+
+  public static OllamaClient getOllamaClient() {
+
   }
 
   private static OkHttpClient.Builder getDefaultClientBuilder() {

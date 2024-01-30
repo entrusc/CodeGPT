@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 public class OllamaServiceSelectionForm extends JPanel  {
 
     private final JBTextField baseHostTextField = new JBTextField();
+    private final JBTextField modelTextField = new JBTextField();
 
     public OllamaServiceSelectionForm() {
         init();
@@ -35,6 +36,7 @@ public class OllamaServiceSelectionForm extends JPanel  {
     private void loadSettings() {
         OllamaSettingsState settings = OllamaSettingsState.getInstance();
         baseHostTextField.setText(settings.getBaseHost());
+        modelTextField.setText(settings.getModel());
     }
 
     private JPanel createServerPreferencesForm() {
@@ -42,11 +44,18 @@ public class OllamaServiceSelectionForm extends JPanel  {
                 .addLabeledComponent(
                         CodeGPTBundle.get("settingsConfigurable.service.ollama.serverPreferences.apiUrl"),
                         baseHostTextField)
+                .addLabeledComponent(
+                        CodeGPTBundle.get("settingsConfigurable.service.ollama.serverPreferences.model"),
+                        modelTextField
+                )
                 .getPanel();
     }
 
     public String getBaseHost() {
         return baseHostTextField.getText();
+    }
+    public String getModel() {
+        return modelTextField.getText();
     }
 
     private JComponent withEmptyLeftBorder(JComponent component) {

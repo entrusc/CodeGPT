@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class OllamaSettingsState implements PersistentStateComponent<OllamaSettingsState>  {
 
     private String baseHost = "";
+    private String model = "deepseek-coder:6.7b";
 
 
     public OllamaSettingsState() {
@@ -20,6 +21,7 @@ public class OllamaSettingsState implements PersistentStateComponent<OllamaSetti
     public void apply(ServiceSelectionForm serviceSelectionForm) {
         var ollamaForm = serviceSelectionForm.getOllamaServiceSelectionForm();
         setBaseHost(ollamaForm.getBaseHost());
+        setModel(ollamaForm.getModel());
     }
 
     public String getBaseHost() {
@@ -28,6 +30,14 @@ public class OllamaSettingsState implements PersistentStateComponent<OllamaSetti
 
     public void setBaseHost(String baseHost) {
         this.baseHost = baseHost;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     @Override

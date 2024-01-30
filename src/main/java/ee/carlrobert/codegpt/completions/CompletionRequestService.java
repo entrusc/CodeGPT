@@ -64,6 +64,10 @@ public final class CompletionRequestService {
                 callParameters.getMessage(),
                 callParameters.getConversationType()),
             eventListener);
+      case OLLAMA:
+        return CompletionClientProvider.getOllamaClient().getChatCompletionAsync(
+
+        );
       default:
         throw new IllegalArgumentException();
     }

@@ -11,6 +11,7 @@ import ee.carlrobert.codegpt.CodeGPTPlugin;
 import ee.carlrobert.codegpt.EncodingManager;
 import ee.carlrobert.codegpt.completions.llama.LlamaModel;
 import ee.carlrobert.codegpt.completions.llama.PromptTemplate;
+import ee.carlrobert.codegpt.completions.ollama.OllamaCompletionRequest;
 import ee.carlrobert.codegpt.conversations.Conversation;
 import ee.carlrobert.codegpt.conversations.ConversationsState;
 import ee.carlrobert.codegpt.conversations.message.Message;
@@ -18,6 +19,7 @@ import ee.carlrobert.codegpt.settings.configuration.ConfigurationState;
 import ee.carlrobert.codegpt.settings.service.ServiceType;
 import ee.carlrobert.codegpt.settings.state.IncludedFilesSettingsState;
 import ee.carlrobert.codegpt.settings.state.LlamaSettingsState;
+import ee.carlrobert.codegpt.settings.state.OllamaSettingsState;
 import ee.carlrobert.codegpt.settings.state.OpenAISettingsState;
 import ee.carlrobert.codegpt.settings.state.SettingsState;
 import ee.carlrobert.codegpt.settings.state.YouSettingsState;
@@ -125,6 +127,28 @@ public class CompletionRequestProvider {
         .setMin_p(settings.getMinP())
         .setRepeat_penalty(settings.getRepeatPenalty())
         .build();
+  }
+
+  public OllamaCompletionRequest buildOllamaCompletionRequest(
+          Message message,
+          ConversationType conversationType) {
+    var settings = OllamaSettingsState.getInstance();
+
+    var systemPrompt = COMPLETION_SYSTEM_PROMPT;
+    if (conversationType == ConversationType.FIX_COMPILE_ERRORS) {
+      systemPrompt = FIX_COMPILE_ERRORS_SYSTEM_PROMPT;
+    }
+
+    var configuration = ConfigurationState.getInstance();
+
+    var completionRequest = new OllamaCompletionRequest();
+    completionRequest.setModel(settings.getModel());
+    completionRequest.setSystemPrompt(systemPrompt);
+    completionRequest.setUserPrompt(message.getPrompt());
+    completionRequest.setHistory(conversation.getMessages());
+    completionRequest.setMaxTokens(configuration.getMaxTokens());
+    completionRequest.setTemperature(configuration.getTemperature());
+    return completionRequest;
   }
 
   public YouCompletionRequest buildYouCompletionRequest(Message message) {
